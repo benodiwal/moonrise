@@ -26,6 +26,8 @@
   },
   "homepage": "https://github.com/benodiwal/moonrise#readme",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.620.0",
+    "@aws-sdk/s3-request-presigner": "^3.620.0",
     "@prisma/client": "5.16.1",
     "axios": "^1.7.2",
     "child-process": "^1.0.2",
