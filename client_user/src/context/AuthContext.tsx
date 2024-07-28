@@ -8,4 +8,4 @@ const AuthContext: FC<{ children: ReactNode }> = ({ children }) => {
   )
 }
 
-export default AuthContext
+export default AuthContext;

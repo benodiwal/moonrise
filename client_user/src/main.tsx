@@ -2,8 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './pages/App'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home'
+import AuthContext from './context/AuthContext'
+import BaseLayout from './layouts/BaseLayout'
 
 const router = createBrowserRouter([
   {
@@ -11,8 +13,19 @@ const router = createBrowserRouter([
     element: <Home />
   },
   {
-    path: '/app',
-    element: <App />,
+    element: (
+      <AuthContext>
+        <BaseLayout>
+          <Outlet />
+        </BaseLayout>
+      </AuthContext>
+      ),
+      children: [
+        {
+          path: '/app',
+          element: <App />,
+        }
+      ]
   }
 ]);
 
