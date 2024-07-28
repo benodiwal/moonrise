@@ -22,7 +22,7 @@ class UserController extends AbstractController {
         ];
     }
 
-    me() {
+    get() {
         return [
             isAuthenticated(this.ctx),
             async (req: Request, res: Response, next: NextFunction) => {
@@ -42,7 +42,7 @@ class UserController extends AbstractController {
                 }
             }   
         ];
-    }
+    }  
 
     logout() {
         return [

@@ -23,10 +23,9 @@ class Server {
     this.#engine.use(cors({ origin: getEnvVar('CLIENT_ORIGIN'), credentials: true }));
     this.#engine.use(cookieSession({
       name: 'moonrise',
-      keys: [],
       secure: false,
       httpOnly: true,
-      sameSite: 'none'
+      signed: false,
     }));
     this.#engine.use(logger());
   }
