@@ -8,6 +8,7 @@ import AuthContext from './context/AuthContext'
 import BaseLayout from './layouts/BaseLayout'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import WalletsProvider from './providers/WalletProvider'
+import AppLayout from './layouts/AppLayout'
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,17 @@ const router = createBrowserRouter([
       ),
       children: [
         {
-          path: '/app',
-          element: <App />,
+          element: (
+            <AppLayout>
+              <Outlet />
+            </AppLayout>
+            ),
+            children: [
+              {
+                path: '/app',
+                element: <App />,
+              }
+            ]
         }
       ]
   }
