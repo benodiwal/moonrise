@@ -2,11 +2,13 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import React, { ChangeEvent, useState } from "react";
+import { useToast } from "./ui/use-toast";
 
 const FilePicker = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const { toast } = useToast();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
@@ -25,7 +27,12 @@ const FilePicker = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (!selectedFile) return;
+        if (!selectedFile) {
+            toast({
+                title: "Please choose a valid image"
+            });
+            return;
+        }
 
         const formData = new FormData();
         formData.append('picture', selectedFile);

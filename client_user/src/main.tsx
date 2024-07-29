@@ -9,6 +9,7 @@ import BaseLayout from './layouts/BaseLayout'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import WalletsProvider from './providers/WalletProvider'
 import AppLayout from './layouts/AppLayout'
+import { Toaster } from './components/ui/toaster'
 
 const router = createBrowserRouter([
   {
@@ -50,5 +51,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
         </QueryClientProvider>
+        <Toaster />
   </React.StrictMode>,
 )
