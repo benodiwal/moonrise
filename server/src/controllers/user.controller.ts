@@ -6,6 +6,9 @@ import isAuthenticated from "middlewares/isAuthenticated.middleware";
 import nacl from "tweetnacl";
 import { PublicKey } from "@solana/web3.js";
 import { IncorrectSignatureError } from "errors/incorrect-signature";
+import { storageMiddleware } from "middlewares/storage.middleware";
+import s3ServiceClient from "libs/s3.lib";
+import { BadRequestError } from "errors/bad-request-error";
 
 class UserController extends AbstractController {
     signin() {
@@ -64,6 +67,7 @@ class UserController extends AbstractController {
                     return res.json({
                         result: user,
                     });
+
                 } catch (e: unknown) {
                     console.error(e);
                     next(new InternalServerError());
@@ -71,6 +75,35 @@ class UserController extends AbstractController {
             }   
         ];
     }  
+
+    upload() {
+        return [
+            isAuthenticated(this.ctx),
+            storageMiddleware(),
+            async (req: Request, res: Response, next: NextFunction) => {
+                try {
+                    if (!req.file) {
+                        next(new BadRequestError('File not found'));
+                    }
+                    const file = req.file as unknown as Express.Multer.File;
+                    const fileBuffer = file.buffer;
+                    const fileName = file.originalname;
+
+                    const url = await s3ServiceClient.uploadThumbnail(fileName, fileBuffer);
+                    if (!url) {
+                        return res.status(500).send({ message: 'Failed to upload video' });
+                    }
+
+                    return res.status(200).json({
+                        result: url
+                    });
+                } catch (e: unknown) {
+                    console.error(e);
+                    next(new InternalServerError());
+                }
+            }
+        ];
+    }
 
     logout() {
         return [

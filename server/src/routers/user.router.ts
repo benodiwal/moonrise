@@ -6,6 +6,7 @@ class UserRouter extends AbstractRouter {
         const userController = new UserController(this.ctx);
         this.registerGET('/', userController.get());
         this.registerPOST('/signin', userController.signin());
+        this.registerPOST('/upload', userController.upload());
         this.registerGET('/logout', userController.logout());
     }
 }
