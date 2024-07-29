@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import AuthContext from './context/AuthContext'
 import BaseLayout from './layouts/BaseLayout'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import WalletsProvider from './providers/WalletProvider'
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,13 @@ const router = createBrowserRouter([
   },
   {
     element: (
-      <AuthContext>
-        <BaseLayout>
-          <Outlet />
-        </BaseLayout>
-      </AuthContext>
+      <WalletsProvider>
+        <AuthContext>
+          <BaseLayout>
+           <Outlet />
+          </BaseLayout>
+        </AuthContext>
+      </WalletsProvider>
       ),
       children: [
         {
@@ -30,12 +33,12 @@ const router = createBrowserRouter([
   }
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
   </React.StrictMode>,
 )

@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from "react-query"
 import AxiosClient from "./http";
 import { useNavigate } from "react-router-dom";
+import { PublicKey } from "@solana/web3.js";
 
 export const useAuth = () => {
     const queryClient = useQueryClient();
 
     const mut = useMutation({
         mutationKey: ["auth"],
-        mutationFn: ({ publicKey, signature }: { publicKey: string, signature: any }) => AxiosClient.post("/user/signin", {
+        mutationFn: ({ publicKey, signature }: { publicKey: PublicKey, signature: Uint8Array }) => AxiosClient.post("/user/signin", {
             publicKey,
             signature
         }),
