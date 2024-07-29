@@ -29,6 +29,7 @@
     "@aws-sdk/client-s3": "^3.620.0",
     "@aws-sdk/s3-request-presigner": "^3.620.0",
     "@prisma/client": "5.16.1",
+    "@solana/web3.js": "^1.95.2",
     "axios": "^1.7.2",
     "child-process": "^1.0.2",
     "cookie-session": "^2.1.0",
