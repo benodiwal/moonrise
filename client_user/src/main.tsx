@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import WalletsProvider from './providers/WalletProvider'
 import AppLayout from './layouts/AppLayout'
 import { Toaster } from './components/ui/toaster'
+import Dashboard from './pages/Dashboard'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
               {
                 path: '/app',
                 element: <App />,
+              },
+              {
+                path: '/dashboard',
+                element: <Dashboard />
               }
             ]
         }

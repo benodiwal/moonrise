@@ -105,6 +105,28 @@ class UserController extends AbstractController {
         ];
     }
 
+    thumbnails() {
+        return [
+            async (req: Request, res: Response, next: NextFunction) => {
+                try {
+                    const userId = req.session.currentUserId as unknown as string;
+                    const thumbnails = await this.ctx.db.client.thumbnail.findMany({
+                        where: {
+                            userId: parseInt(userId)
+                        }
+                    }); 
+
+                    return res.status(200).json({
+                        result: thumbnails
+                    });
+                } catch (e: unknown) {
+                    console.error(e);
+                    next(new InternalServerError());
+                }
+            }
+        ];
+    }
+
     logout() {
         return [
             isAuthenticated(this.ctx),

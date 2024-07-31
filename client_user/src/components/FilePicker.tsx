@@ -3,6 +3,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import React, { ChangeEvent, useState } from "react";
 import { useToast } from "./ui/use-toast";
+import AxiosClient from "@/state/http";
 
 const FilePicker = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -38,7 +39,8 @@ const FilePicker = () => {
         formData.append('picture', selectedFile);
 
         try {
-            console.log(selectedFile);
+            const res = await AxiosClient.post('/user/upload', formData);
+            console.log(res);
         } catch (e: unknown) {
             console.error(e);
         }

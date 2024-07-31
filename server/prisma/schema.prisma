@@ -8,6 +8,14 @@ datasource db {
 }
 
 model User {
-   id       Int       @id @default(autoincrement())
-   address  String    @unique
+  id          Int        @id @default(autoincrement())
+  address     String     @unique
+  thumbnails  Thumbnail[]
+}
+
+model Thumbnail {
+  id         Int       @id @default(autoincrement())
+  userId      Int
+  url         String
+  user        User     @relation(fields: [userId], references: [id])
 }
