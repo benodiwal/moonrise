@@ -1,2 +1,5 @@
 export type User = {};
-export type UserResponse = {};
+
+export type UserResponse = {
+    result: User;
+};

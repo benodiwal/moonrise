@@ -1,2 +1,5 @@
 export type Thumbnail = {};
-export type ThumbnailResponse = {};
+
+export type ThumbnailResponse = {
+    result: Thumbnail[]
+};
