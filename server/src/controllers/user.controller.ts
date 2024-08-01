@@ -85,6 +85,7 @@ class UserController extends AbstractController {
                     if (!req.file) {
                         next(new BadRequestError('File not found'));
                     }
+                    const userId = req.session.currentUserId as string;
                     const file = req.file as unknown as Express.Multer.File;
                     const fileBuffer = file.buffer;
                     const fileName = file.originalname;
@@ -94,9 +95,18 @@ class UserController extends AbstractController {
                         return res.status(500).send({ message: 'Failed to upload video' });
                     }
 
-                    return res.status(200).json({
-                        result: url
+                    await this.ctx.db.client.thumbnail.create({
+                        data: {
+                            url,
+                            user: {
+                                connect: {
+                                    id: parseInt(userId),
+                            }
+                            }
+                        }
                     });
+
+                    return res.sendStatus(200);
                 } catch (e: unknown) {
                     console.error(e);
                     next(new InternalServerError());

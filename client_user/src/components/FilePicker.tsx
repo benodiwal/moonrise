@@ -4,12 +4,14 @@ import { Button } from "./ui/button";
 import React, { ChangeEvent, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import AxiosClient from "@/state/http";
+import { useNavigate } from "react-router-dom";
 
 const FilePicker = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const { toast } = useToast();
+    const navigate = useNavigate();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
@@ -40,7 +42,9 @@ const FilePicker = () => {
 
         try {
             const res = await AxiosClient.post('/user/upload', formData);
-            console.log(res);
+            if (res.status === 200) {
+                navigate("/dashboard");
+            }
         } catch (e: unknown) {
             console.error(e);
         }
@@ -69,4 +73,4 @@ const FilePicker = () => {
     );
 };
 
-export default FilePicker;
+export default FilePicker;  
